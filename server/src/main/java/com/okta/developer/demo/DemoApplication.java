@@ -1,5 +1,6 @@
 package com.okta.developer.demo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,11 +37,11 @@ public class DemoApplication {
     }
 
     @Bean
-    public FilterRegistrationBean<CorsFilter> simpleCorsFilter() {
+    public FilterRegistrationBean<CorsFilter> simpleCorsFilter(@Value("${okta.oauth2.origin}") String allowedOrigin) {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        config.setAllowedOrigins(Collections.singletonList(allowedOrigin));
         config.setAllowedMethods(Collections.singletonList("*"));
         config.setAllowedHeaders(Collections.singletonList("*"));
         source.registerCorsConfiguration("/**", config);

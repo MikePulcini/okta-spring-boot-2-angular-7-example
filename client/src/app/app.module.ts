@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -14,9 +15,9 @@ import { AuthInterceptor } from './shared/okta/auth.interceptor';
 import { HomeComponent } from './home/home.component';
 
 const config = {
-  issuer: 'https://dev-737523.oktapreview.com/oauth2/default',
-  redirectUri: 'http://localhost:4200/implicit/callback',
-  clientId: '0oagqzcu86BBOq2jF0h7'
+  issuer: environment.issuer,
+  redirectUri: environment.redirectUri,
+  clientId: environment.clientId
 };
 
 @NgModule({
