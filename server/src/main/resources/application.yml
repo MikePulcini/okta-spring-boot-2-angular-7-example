@@ -2,4 +2,4 @@ okta:
   oauth2:
     client-id: client-id-goes-here
     issuer: https://dev-xxxxxx.oktapreview.com/oauth2/default
-    origin: http://localhost
+    origin: http://localhost:4200
