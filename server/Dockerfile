@@ -1,4 +1,5 @@
-FROM maven:3.5.0-jdk-8-alpine
+# Stage 1: Build via maven
+FROM maven:3.5.0-jdk-8-alpine AS build
 
 RUN mkdir -p /usr/server
 WORKDIR /usr/server
@@ -6,6 +7,13 @@ WORKDIR /usr/server
 # Copy the actual code
 COPY ./ .
 
-# Run spring-boot:run to build, package, and run the webapp
-# TODO: Optimize this so we don't have to rebuild the JAR and redownload all dependencies each time
-CMD ["mvn", "spring-boot:run"]
+# Compile the webapp (downloading all dependencies) and build fat JAR
+RUN mvn compile package
+RUN mv target/demo-0.0.1-SNAPSHOT.jar target/app.jar
+
+# Stage 2: Execute webapp
+FROM openjdk:8-jre-alpine
+
+COPY --from=build /usr/server/target/app.jar /usr/server/app.jar
+
+CMD ["java", "-jar", "/usr/server/app.jar"]
