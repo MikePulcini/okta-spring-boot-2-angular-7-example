@@ -1,0 +1,22 @@
+version: '3'
+services:
+  oidc-web:
+    build:
+      context: ./client
+    image: oidc-web
+    ports: 
+      - 4200:4200
+    networks:
+      - network1
+  oidc-api:
+    build: 
+      context: ./server
+    image: oidc-api
+    ports:
+      - 8080:8080
+    networks:
+      - network1
+
+networks:
+  network1:
+
